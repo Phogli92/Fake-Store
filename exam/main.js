@@ -10,23 +10,43 @@ let cart = document.querySelector(".cart-parent");
 let cartLook = document.querySelector('.cart-look')
 let sum = [];
 let res = 1;
+if(localStorage.key('key-name') != Number){
+
+}
+else{
+  let res4 = localStorage.setItem('key-name', 100)
+  res4.slice(0,1)
+}
+let keyItems = []
+if(localStorage.key('key-name') == Number){
+  let pushItems = localStorage.getItem('key-name').split(',')
+}
+else{
+  let pushItems = localStorage.getItem('key-name')
+  keyItems.push(pushItems)
+}
+console.log(keyItems)
+
+
 
 let cartOnClick = async(link)=>{
   const response = await fetch(link);
   let data = await response.json();
   cards.innerHTML = ''
-  for(let i = 0; i < sum.length; i++){
+  for (let i = 0; i < keyItems.length; i++) {
+    let filterData = data.filter((data) => data.id == keyItems[i]);
     let carts = document.createElement('div')
   carts.innerHTML = `
   <div class="card">
-  <div class="img"><img src="${data[sum[i] - 1]?.image}" class="img"></div>
-  <p class="title">${data[sum[i] - 1]?.title}</p>
-  <h3 class="price-2">${data[sum[i] - 1]?.price}$</h3>
+  <div class="img"><img src="${filterData[sum[i] - 1]?.image}" class="img"></div>
+  <p class="title">${filterData[sum[i] - 1]?.title}</p>
+  <h3 class="price-2">${filterData[sum[i] - 1]?.price}$</h3>
 </div>
   `
   cartLook.appendChild(carts)
   }
 }
+
 let cartClose = ()=>{
   location.reload()
 }
@@ -48,7 +68,11 @@ let test = async (link) => {
   });
 };
 
-let onClick = (elem) => {sum.push(elem);cartNumber.innerHTML = res++;};
+
+let cartClear = ()=>{
+  localStorage.clear()
+}
+let onClick = (elem) => {sum.push(elem);keyItems.push(elem);console.log(elem, keyItems);cartNumber.innerHTML = res++; localStorage.setItem('key-name', `${keyItems}`)}
 test("https://fakestoreapi.com/products");
 let filters = async (link, mat) => {
   const response = await fetch(link);
@@ -89,3 +113,6 @@ all.onclick = () => {
 };
 
 cartNumber.innerHTML = 0;
+
+// localStorage.clear()
+

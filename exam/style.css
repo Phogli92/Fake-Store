@@ -120,7 +120,7 @@ button:hover {
   height: 20px;
   color: white;
 }
-.cart-close{
+.cart-close, .cart-clear{
   cursor: pointer;
   border: none;
   box-shadow: none;
